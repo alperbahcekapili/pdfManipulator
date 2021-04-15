@@ -3,7 +3,7 @@ A console tool which lets user do basic pdf manipulations.
 
 ## Features added so far:
   ### Merge 
-    *If you have 2 or more pdf files you can merge them in any ordering...
+   * If you have 2 or more pdf files you can merge them in any ordering...
 
 ## Prerequisites  
 * gradle 6.5
@@ -11,5 +11,4 @@ A console tool which lets user do basic pdf manipulations.
 
 
  
-
-* Help page can be accessed after running the program
+#### Help page can be accessed after running the program
