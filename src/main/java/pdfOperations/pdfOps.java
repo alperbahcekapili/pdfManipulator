@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.Scanner;
 
 import javax.lang.model.util.ElementScanner14;
+import javax.print.attribute.standard.NumberUp;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
@@ -86,6 +87,48 @@ public class pdfOps {
 
 
 
+
+    }
+    static void splitPDF(File f) throws IOException{
+        
+        PDDocument document = PDDocument.load(f);
+        int num_pages = document.getNumberOfPages();
+        String file_path = f.getAbsolutePath();
+        for(int i = 0;i<num_pages;i++){
+            PDDocument tempDoc = new PDDocument();
+            tempDoc.addPage(document.getPages().get(i));
+            tempDoc.save(file_path.substring(0, file_path.length()-4) + "_" + i + ".pdf");
+            tempDoc.close();
+        }    
+        System.out.println("Files have been created successfully");
+    
+    }
+
+    static void insertInto(File mainFile, File scndFile, int index) throws IOException, IllegalArgumentException{
+        
+        PDDocument mainDoc = PDDocument.load(mainFile);
+        PDDocument scndDoc = PDDocument.load(scndFile);
+        int newFileSize = mainDoc.getNumberOfPages() + scndDoc.getNumberOfPages();
+        int scndFileSize = scndDoc.getNumberOfPages();
+        String file_path = mainFile.getAbsolutePath();
+
+        if(index < 1  || index > newFileSize - scndFileSize)
+            throw new IllegalArgumentException("index must be inside 1-mainFilePageNumber");
+        PDDocument newDoc = new PDDocument();
+        for(int i = 0;i<newFileSize;i++){
+
+            if( i+1 >= index && i+1 < index + scndFileSize){
+                newDoc.addPage(scndDoc.getPages().get(i+1-index));
+            }else if(i+1>=index){
+                newDoc.addPage(mainDoc.getPages().get(i-scndFileSize));               
+            }else{
+                newDoc.addPage(mainDoc.getPages().get(i));
+            }
+
+        }
+        newDoc.save(file_path.substring(0, file_path.length()-4) + "_" + "inserted" + ".pdf");
+        newDoc.close();
+        
 
     }
     static void printText(String filename) throws IOException {
