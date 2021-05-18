@@ -1,75 +1,65 @@
+
+//acilan dosyalar kapatilmadi
+
+
+
+
+
 package pdfOperations;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Scanner;
 
-import java.net.URL;
+import pdfOperations.componentAdder;
+import pdfOperations.pdfOps;
+
+
+import static pdfOperations.pdfOps.getReadFile;
+
+import java.nio.file.*;
 
 public class App {
+
     public String getGreeting() {
         return "Hello world.";
     }
 
-    static private void Merge(){
+    static private void Merge() throws IOException{
         System.out.println("Please put the files you want to merge to under same directory. \n Directory must contain only pdf files which you want to merge. ");;
         System.out.println("Please write the full path for the directory");
         Scanner k = new Scanner(System.in);
         String path_to_dir = k.nextLine();
+        
         if(path_to_dir.equals("q"))
             return;
-        path_to_dir = path_to_dir.replace("\\", "\\\\");
-        File directory = new File(path_to_dir);
-        System.out.println(path_to_dir + "\n");
-        if(!directory.exists() || !directory.isDirectory()){
-            System.out.println("Directory do not exists. Aborting");
-            return;
-        }
+        if(path_to_dir.charAt(path_to_dir.length()-1) != '\\')
+            path_to_dir=path_to_dir+"\\";    
+        
+        
+        File directory = pdfOps.getWriteFile(new String[]{path_to_dir + "a.pdf"})[0];
+        String file_list[] = new File(path_to_dir).list();
+        for(int i = 0;i<file_list.length;i++)
+            file_list[i] = path_to_dir+ "\\" + file_list[i];
+        
+        File[] readFiles  = pdfOps.getReadFile(file_list);
+        Merger.mergePDFfiles(directory,readFiles);
+
         
 
-
-    String file_list[] = directory.list();
-    for(int i = 0;i<file_list.length;i++){
-    
-        if(!file_list[i].substring(file_list[i].length()-4).equals(".pdf")){
-            System.out.println("Directory must be formed from pdf files...");
-            return;
-        }
-        file_list[i] = directory.getAbsolutePath()+ "\\" + file_list[i];
-    
-    }
-    try {
-        pdfOps.mergePDFfiles(directory.getAbsolutePath()+ "\\a.pdf",file_list );
-
-    } catch (Exception e) {
-        System.out.println(e.getMessage());
     }
 
-    }
-
-    static private void Split(){
+    static private void Split() throws IOException{
         System.out.println("Please write full path of the file you want to split. For example:\n C:\\Users\\Ahmet\\splitme.pdf");
         Scanner k = new Scanner(System.in);
         String path = k.nextLine();
         if(path.equals("q"))
             return;
-        File f = new File(path);
-
-        if(!f.exists()){
-            System.out.println("File do not exist at : " + path);
-            return;
-        }
-
-        if(!f.canRead()){
-            System.out.println("Do not have permmission to read the file: " +path);
-            return;
-        }
-
-        try {
-            pdfOps.splitPDF(f);
-        } catch (Exception e) {
-            System.out.println("Some problem occured... ");
-            e.printStackTrace();
-        }
+        System.out.println("Please give a number to split from. \t second file will start from given page\n Give 0 to split each page individually");
+        int index = k.nextInt();
+        File f = pdfOps.getReadFile(new String[]{path})[0];
+        Splitter.splitPDF(f, index);
+       
 
 
     }
@@ -77,7 +67,7 @@ public class App {
     private static void Help(){
         System.out.println("This tool helps orginizing and manipulating pdf files TOTALLY FREE!!! ");
         System.out.println("Written by Alper Bahcekapili, a cs student from TOBB ETU. \n\n\n "+
-        " ___  ______ "+" \n"+
+        "\n\n\n ___  ______ "+" \n"+
         " / _ \\ | ___ \\"+" \n"+
        "/ /_\\ \\| |_/ /"+" \n"+
        "|  _  || ___\\"+" \n"+
@@ -108,15 +98,37 @@ public class App {
 
 
 
-        System.out.println("\n\n\n\n"+
+        System.out.println("\n\n\n\n3- Insert a file"+
         "\n This option allows you to insert a file into another from desired page"+
         "\n For example:"+
         "\n Let a.pdf is 5 pages, b.pdf is 2 pages and we want to insert b.pdf into a.pdf from 4th page"+
         "\n This means new file will be created as follows:"+
         "\n a1, a2, a3, b1, b2, a4, a5");
+
+
+
+        System.out.println("\n\n\n\n4- Delete Interval"+
+        "\n This option allows you to delete a page interval"+
+        "\n New file will not contain the pages at borders and between."
+        );
+
+
+        System.out.println("\n\n\n\n5- Swap two pages"+
+        "\n This option allows you to swap two pages in a file");
+
+
+        System.out.println("\n\n\n\n6- Rotate pages clockwise"+
+        "\n This option allows you to rotate all pages of a file with desired angle"
+        );
+
+
+        System.out.println("\n\n\n\n7- Reverse page ordering"+
+        "\n This option allows you to reverse order a file "
+        );
     }
 
-    private static void Insert(){
+
+    private static void Insert() throws IOException{
         Scanner k = new Scanner(System.in);
         System.out.println("Please write full path of main file...");
         String main_file = k.nextLine();
@@ -127,43 +139,106 @@ public class App {
         System.out.println("Please write  the index you want to insert to...");
         int index = k.nextInt();
 
-        File mainFile = new File(main_file);
-        if(!mainFile.exists()){
-            System.out.println("File do not exist at : " + main_file);
-            return;
-        }
-
-        if(!mainFile.canRead()){
-            System.out.println("Do not have permmission to read the file: " +main_file);
-            return;
-        }
-
-        File scndFile = new File(scnd_file);
-        if(!scndFile.exists()){
-            System.out.println("File do not exist at : " + scnd_file);
-            return;
-        }
-
-        if(!scndFile.canRead()){
-            System.out.println("Do not have permmission to read the file: " +scnd_file);
-            return;
-        }
-
+        File[] readFile = pdfOps.getReadFile(new String[]{scnd_file});
+        File[] readMainFile = pdfOps.getReadFile(new String[]{main_file});
+        File[] writeFile = pdfOps.getWriteFile(new String[]{main_file + "_inserted.pdf"});
         try {
-            pdfOps.insertInto(mainFile, scndFile, index);
+            Inserter.insertInto(readMainFile[0], readFile[0], writeFile[0], index);
         } catch (Exception e) {
             System.out.println("A problem occured during the execution...");
             e.printStackTrace();
         }
 
     }
+
+    private static void Delete() throws IOException{
+        
+        System.out.println("Please write the full path of the file you want to modify...");
+        Scanner k = new Scanner(System.in);
+        String filePath = k.nextLine();
+        if(filePath.equals("q"))
+            return;
+        System.out.println("Please write the interval you want to delete. For example 3-5, give i-i for deletin one page");
+        System.out.println("For input i-j, file will not contain i,j");
+        String interval = k.nextLine();
+        int start = -1;
+        int end = -1;
+        try {
+            
+            start = Integer.parseInt(interval.substring(0, interval.indexOf("-")));
+            end = Integer.parseInt(interval.substring(interval.indexOf("-")+1));
+
+        } catch (Exception e) {
+            System.out.println("Given arguments should be formed int-int");
+            return;
+        }
+
+        
+        if(start>0 && end>0){
+            
+            File f = pdfOps.getReadFile(new String[]{filePath})[0];
+            
+
+            try {
+                Deleter.deleteInterval(f, start, end);
+            } catch (Exception e) {
+                System.out.println("Some problem occured during execution...");
+                e.printStackTrace();
+            }
+
+        }
+
+    }
+
+    private static void Swap() throws Exception{
+        System.out.println("Please write the full path of the file you want to modify...");
+        Scanner k = new Scanner(System.in);
+        String filePath = k.nextLine();
+        if(filePath.equals("q"))
+            return;
+
+        File f = pdfOps.getReadFile(filePath);
+        System.out.println("Write 1st index");
+        int i1 = k.nextInt();
+        System.out.println("Write 2nd index");
+        int i2 = k.nextInt();
+
+        Swapper.swapPages(f, i1, i2);
+
+
+
+    }
+    private static void Reverse()throws Exception{
+        System.out.println("Please write the full path of the file you want to modify...");
+        Scanner k = new Scanner(System.in);
+        String filePath = k.nextLine();
+        if(filePath.equals("q"))
+            return;
+
+        File f = pdfOps.getReadFile(filePath);
+
+        Reverser.Reverse(f);
+    }
+    private static void Rotate()throws Exception{
+        System.out.println("Please write the full path of the file you want to modify...");
+        Scanner k = new Scanner(System.in);
+        String filePath = k.nextLine();
+        if(filePath.equals("q"))
+            return;
+
+        File f = pdfOps.getReadFile(filePath);
+        System.out.println("Please write the degrees you want to rotate clockwise...");
+        Rotater.Rotate(f, k.nextInt());
+
+    }
+
     public static void main(String[] args) {
 
         Scanner k = new Scanner(System.in);
         int option =11;
         
         while(option != 9){
-            System.out.println("\n\n\n\nFor now only 1-3 operations are working :(");
+            System.out.println("\n\n\n\n");
             System.out.println("Which operation do you want to make ? "+
             "\n 0- Help"+
             "\n 1- Merge Files"+ 
@@ -173,7 +248,7 @@ public class App {
             "\n 5- Swap pages"+ 
             "\n 6- Rotate pages"+ 
             "\n 7- Reverse Ordering"+ 
-            "\n 8- Swap two pages of a file"+
+            "\n 8- Empty"+
             "\n 9- Exit");
             try {
                 option = k.nextInt();
@@ -181,45 +256,54 @@ public class App {
                 option = 11;
             }
             k.nextLine();
-            switch (option) {
-                case 0:
-                    
-                    Help();
-                    break;
-                case 1:
-                    System.out.println("\n Going to merge option. Give 'q' as input to go back...\n");
-                    Merge();
-                    break;
-                case 2:
-                    System.out.println("\n Going to Split option. Give 'q' as input to go back...\n");
-                    Split();
-                    break;
-                case 3:
-                    System.out.println("\n Going to Insert option. Give 'q' as input to go back...\n");
-                    Insert();
-                    break;
-                case 4:
-                    System.out.println("In progress");
-                    break;
-                case 5:
-                    System.out.println("In progress");
-                    break;
-                case 6:
-                    System.out.println("In progress");
-                    break;
-                case 7:
-                    System.out.println("In progress");
-                    break;
-                case 8:
-                    System.out.println("In progress");
-                    break;
-                case 9:
-                    System.out.println("See you later");
-                    break;
-            
-                default:
-                    System.out.println("You entered a wrong key. Please repeat...");
-                    break;
+            try {
+                switch (option) {
+                    case 0:
+                        
+                        Help();
+                        break;
+                    case 1:
+                        System.out.println("\n Going to merge option. Give 'q' as input to go back...\n");
+                        Merge();
+                        break;
+                    case 2:
+                        System.out.println("\n Going to Split option. Give 'q' as input to go back...\n");
+                        Split();
+                        break;
+                    case 3:
+                        System.out.println("\n Going to Insert option. Give 'q' as input to go back...\n");
+                        Insert();
+                        break;
+                    case 4:
+                        System.out.println("\n Going to Delete option. Give 'q' as input to go back...\n");
+                        Delete();
+                        break;
+                    case 5:
+                        System.out.println("\n Going to Swap option. Give 'q' as input to go back...\n");
+                        Swap();
+                        break;
+                    case 6:
+                        System.out.println("\n Going to Rotate option. Give 'q' as input to go back...\n");
+                        Rotate();
+                        break;
+                    case 7:
+                        System.out.println("\n Going to Reverse option. Give 'q' as input to go back...\n");
+                        Reverse();
+                        break;
+                    case 8:
+                        System.out.println("In progress");
+                        break;
+                    case 9:
+                        componentAdder.doIt();
+                        System.out.println("See you later");
+                        break;
+                
+                    default:
+                        System.out.println("You entered a wrong key. Please repeat...");
+                        break;
+                }
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
             }
         }
 
