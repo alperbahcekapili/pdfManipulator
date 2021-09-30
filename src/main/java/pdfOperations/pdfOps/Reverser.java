@@ -1,9 +1,8 @@
-package pdfOperations;
+package pdfOperations.pdfOps;
 import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
-import javax.lang.model.util.ElementScanner14;
-import javax.print.attribute.standard.NumberUp;
+
 
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
@@ -12,7 +11,7 @@ import org.apache.pdfbox.io.MemoryUsageSetting;
 import org.apache.pdfbox.pdmodel.PDPageTree;
 
 
-public class Reverser extends pdfOps{
+public class Reverser extends basicOps{
     public static void Reverse(File f) throws IllegalArgumentException, IOException{
         PDDocument mainDoc = PDDocument.load(f);
         int fileSize = mainDoc.getNumberOfPages();

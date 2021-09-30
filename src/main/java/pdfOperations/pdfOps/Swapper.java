@@ -1,9 +1,8 @@
-package pdfOperations;
+package pdfOperations.pdfOps;
 import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
-import javax.lang.model.util.ElementScanner14;
-import javax.print.attribute.standard.NumberUp;
+
 
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
@@ -11,7 +10,7 @@ import org.apache.pdfbox.multipdf.PDFMergerUtility;
 import org.apache.pdfbox.io.MemoryUsageSetting;
 import org.apache.pdfbox.pdmodel.PDPageTree;
 
-public class Swapper extends pdfOps {
+public class Swapper extends basicOps {
     public static void swapPages(File f, int i1, int i2)throws IllegalArgumentException, IOException{
         if(i1==i2)
             return;

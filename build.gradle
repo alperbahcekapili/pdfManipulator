@@ -12,6 +12,14 @@ plugins {
 
     // Apply the application plugin to add support for building a CLI application.
     id 'application'
+    id 'org.openjfx.javafxplugin' version '0.0.10'
+
+
+}
+
+javafx {
+    version = "17"
+    modules = [ 'javafx.controls' ]
 }
 
 repositories {
@@ -19,15 +27,35 @@ repositories {
     // You can declare any Maven/Ivy/file repository here.
     jcenter()
 }
-sourceSets{
-    main.java.srcDir "src/main"
-    test.java.srcDir "src/test"
+
+sourceSets {
+        main {
+            java {
+                srcDir 'src/main/java'
+            }
+            
+        }
+        test{
+            java{
+                srcDir 'src/test/java'
+
+            }
+        }
 }
+
 
 dependencies {
     // This dependency is used by the application.
     implementation 'com.google.guava:guava:29.0-jre'
-    implementation 'org.apache.pdfbox:pdfbox:2.0.20'
+    implementation 'org.apache.pdfbox:pdfbox:2.0.22'
+    // https://mvnrepository.com/artifact/org.apache.pdfbox/jbig2-imageio
+implementation 'org.apache.pdfbox:jbig2-imageio:3.0.3'
+// https://mvnrepository.com/artifact/org.apache.pdfbox/pdfbox-tools
+implementation group: 'org.apache.pdfbox', name: 'pdfbox-tools', version: '2.0.24'
+// https://mvnrepository.com/artifact/org.openjfx/javafx-swing
+
+implementation 'org.openjfx:javafx-swing:17'
+
     // Use JUnit test framework
     testImplementation 'junit:junit:4.13'
 }
@@ -41,9 +69,3 @@ run{
     standardInput = System.in
 }
 
-
-jar{
-    manifest{
-        attributes "Main-Class": "$mainClassName"
-    }
-}

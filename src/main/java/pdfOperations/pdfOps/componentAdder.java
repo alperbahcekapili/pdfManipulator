@@ -1,4 +1,4 @@
-package pdfOperations;
+package pdfOperations.pdfOps;
 
 
 
@@ -7,8 +7,6 @@ import java.io.File;
 import org.apache.pdfbox.pdmodel.PDPage;
 import java.io.IOException;
 import java.util.Scanner;
-import javax.lang.model.util.ElementScanner14;
-import javax.print.attribute.standard.NumberUp;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;

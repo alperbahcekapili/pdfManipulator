@@ -1,9 +1,8 @@
-package pdfOperations;
+package pdfOperations.pdfOps;
 import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
-import javax.lang.model.util.ElementScanner14;
-import javax.print.attribute.standard.NumberUp;
+
 
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
@@ -13,8 +12,8 @@ import org.apache.pdfbox.pdmodel.PDPageTree;
 /**
  * Inserter
  */
-public class Inserter extends pdfOps {
-    static void insertInto(File mainFile, File scndFile, File writeFile, int index) throws IOException, IllegalArgumentException{
+public class Inserter extends basicOps {
+    public static void insertInto(File mainFile, File scndFile, File writeFile, int index) throws IOException, IllegalArgumentException{
         
         PDDocument mainDoc = PDDocument.load(mainFile);
         PDDocument scndDoc = PDDocument.load(scndFile);

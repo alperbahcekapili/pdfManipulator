@@ -1,18 +1,17 @@
 
-package pdfOperations;
+package pdfOperations.pdfOps;
 import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
-import javax.lang.model.util.ElementScanner14;
-import javax.print.attribute.standard.NumberUp;
+
 
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
 import org.apache.pdfbox.multipdf.PDFMergerUtility; 
 import org.apache.pdfbox.io.MemoryUsageSetting;
 
-class Merger extends pdfOps{
-    static void mergePDFfiles(File destiny, File[] files) throws IOException{
+public class Merger extends basicOps{
+    public static void mergePDFfiles(File destiny, File[] files) throws IOException{
 
         System.out.println("Starting merging...");
         System.out.println("Following files are going to be merged. Please write the ordering you want for files. \n For example: a.pdf\nb.pdf\nc.pdf \n input: 2,1,3  \n"+
