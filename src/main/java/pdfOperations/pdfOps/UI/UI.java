@@ -52,7 +52,7 @@ public class UI extends Application implements Runnable{
         primaryStage.setTitle("PDF Manipulator");
         
         
-        Image im2 = visualizePDF.saveAsImage(basicOps.getReadFile("C:\\Users\\Lenovo\\Desktop\\test\\b_2.pdf"));
+        Image im2 = visualizePDF.saveAsImage(basicOps.getReadFile("C:\\Users\\Lenovo\\Desktop\\test\\b_2.pdf"))[0];
         ImageView view2 = new MyImageView(im2);
         
 
@@ -64,8 +64,8 @@ public class UI extends Application implements Runnable{
 
 
         
-
-        pane.getChildren().addAll(view1, new resimEkleButton()));
+        Pane pane = new Pane();
+        pane.getChildren().addAll(view2, new resimEkleButton());
         
        
 

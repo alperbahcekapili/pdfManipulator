@@ -1,32 +1,35 @@
 pdfOperations/pdfOps/Printer.java
  pdfOperations.pdfOps.Printer
-pdfOperations/pdfOps/visualizePDF.java
- pdfOperations.pdfOps.visualizePDF
+pdfOperations/pdfOps/Inserter.java
+ pdfOperations.pdfOps.Inserter
 pdfOperations/pdfOps/componentAdder.java
  pdfOperations.pdfOps.componentAdder
+pdfOperations/pdfOps/UI/UI.java
+ pdfOperations.pdfOps.UI.MyImageView
+ pdfOperations.pdfOps.UI.MyImageView$1
+ pdfOperations.pdfOps.UI.UI
+ pdfOperations.pdfOps.UI.pdfAcButton
+ pdfOperations.pdfOps.UI.pdfAcButton$1
+ pdfOperations.pdfOps.UI.pdfPagePane
+ pdfOperations.pdfOps.UI.resimEkleButton
+ pdfOperations.pdfOps.UI.resimEkleButton$1
+pdfOperations/pdfOps/Rotater.java
+ pdfOperations.pdfOps.Rotater
 pdfOperations/pdfOps/basicOps.java
  pdfOperations.pdfOps.basicOps
 pdfOperations/pdfOps/Reverser.java
  pdfOperations.pdfOps.Reverser
-pdfOperations/pdfOps/Inserter.java
- pdfOperations.pdfOps.Inserter
-pdfOperations/pdfOps/Swapper.java
- pdfOperations.pdfOps.Swapper
+pdfOperations/App.java
+ pdfOperations.App
+pdfOperations/pdfOps/visualizePDF.java
+ pdfOperations.pdfOps.visualizePDF
 pdfOperations/pdfOps/Merger.java
  pdfOperations.pdfOps.Merger
-pdfOperations/pdfOps/Rotater.java
- pdfOperations.pdfOps.Rotater
 pdfOperations/pdfOps/Splitter.java
  pdfOperations.pdfOps.Splitter
 pdfOperations/Main.java
  pdfOperations.Main
 pdfOperations/pdfOps/Deleter.java
  pdfOperations.pdfOps.Deleter
-pdfOperations/App.java
- pdfOperations.App
-pdfOperations/pdfOps/UI/UI.java
- pdfOperations.pdfOps.UI.MyImageView
- pdfOperations.pdfOps.UI.MyImageView$1
- pdfOperations.pdfOps.UI.UI
- pdfOperations.pdfOps.UI.resimEkleButton
- pdfOperations.pdfOps.UI.resimEkleButton$1
+pdfOperations/pdfOps/Swapper.java
+ pdfOperations.pdfOps.Swapper

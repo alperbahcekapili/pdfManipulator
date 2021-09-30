@@ -41,7 +41,7 @@ public class visualizePDF {
             ImageIOUtil.writeImage(bim, "denemeresmi" + "-" + (page+1) + ".png", 300);
             document.close();
 
-            images[page] = convertToFxImage(bim)
+            images[page] = convertToFxImage(bim);
 
             return  images;
             
